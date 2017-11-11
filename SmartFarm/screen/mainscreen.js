@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Text,View,TouchableHighlight,Switch,Animated,AsyncStorage,TouchableWithoutFeedback} from 'react-native';
+import {Text,View,TouchableHighlight,Switch,Animated,Easing,AsyncStorage,TouchableWithoutFeedback, ScrollView, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SquareView from '../component/squareView'
@@ -21,7 +21,7 @@ class MainScreen extends Component {
         this.client = null;       
         this.state = {
             listDevice:[],
-            visibleConnectView : false
+            visibleConnectView : false,
         }
     }
     controlDevice(address,stateCurrent) {
@@ -94,7 +94,7 @@ class MainScreen extends Component {
         });
     }
     render() {
-        const {animationMain2,animationMain3,animationMain1} = this.props.animationMain
+        const {animationMain2,animationMain3,animationMain1,animationMain4,animationMain5} = this.props.animationMain
         var animationMain33 = '0deg'
         var animationMain22 = 0
         if (animationMain2 && animationMain3) {
@@ -109,7 +109,7 @@ class MainScreen extends Component {
         }
 
         const {container,subContainer,viewInformation,textInformation,
-            subViewInformation1,subViewInformation2,viewControl,
+        subViewInformation1,subViewInformation2,viewControl,
         viewHeader,textInformation2,subContainer2} = style
         const {jsonListDevice} = this.props
         const {stateButton,stateFan,stateWater,stateTemperature} = this.props.stateAllData
@@ -117,15 +117,45 @@ class MainScreen extends Component {
         return(
             <View style = {container}>
                 <LinearGradient style ={container} colors = {['#43C6AC','#F8FFAE']}>
-                    <View style = {subContainer}>
+                    <View style = {{justifyContent:'flex-start',marginTop:50,position:'absolute',height,width:width/2}}>
+                        <TouchableOpacity onPress={()=>{    
+                            this.props.load(!this.props.animationMain.animation)                                                                                                        
+                    // this.props.navigation.navigate('History', {name: 'Lucy'})
+                        }}>
+                            <View style = {{flexDirection:'row',alignItems:'flex-start',backgroundColor:'rgba(0,0,0,0.1)',margin:10,alignItems:'center',height:50,justifyContent:'center'}}>
+                                <Icon style = {{right:10}} name = {'cogs'} size={20} color={'white'}/>
+                                <Text style = {{color:'white',fontSize:17,backgroundColor:'transparent',fontWeight:'600'}}>Thiết bị</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{
+                            this.props.load(!this.props.animationMain.animation)                                                
+                            this.props.navigation.navigate('History', {navigation: this.props.navigation})}}>
+                            <View style = {{flexDirection:'row',alignItems:'flex-start',backgroundColor:'rgba(0,0,0,0.1)',margin:10,alignItems:'center',height:50,justifyContent:'center'}}>
+                                <Icon style = {{right:10}} name = {'history'} size={20} color={'white'}/>
+                                <Text style = {{color:'white',fontSize:17,backgroundColor:'transparent',fontWeight:'600'}}>Lịch sử</Text>
+                            </View>
+                        </TouchableOpacity>                     
+                        <TouchableOpacity onPress={()=>{
+                            this.props.load(!this.props.animationMain.animation)
+                            this.props.navigation.navigate('SetTime', {navigation: this.props.navigation})
+                            }}>
+                            <View style = {{flexDirection:'row',alignItems:'flex-start',backgroundColor:'rgba(0,0,0,0.1)',margin:10,alignItems:'center',height:50,justifyContent:'center'}}>
+                                <Icon style = {{right:10}} name = {'clock-o'} size={20} color={'white'}/>
+                                <Text style = {{color:'white',fontSize:17,backgroundColor:'transparent',fontWeight:'600'}}>Hẹn giờ</Text>
+                            </View>
+                        </TouchableOpacity>           
+                    </View>
+
+
                     <Animated.View
                      style = {{
                          transform: [
                             { perspective: animationMain1?animationMain1:1 },
                             { translateX: animationMain22 },
                             { rotateY: animationMain33},
-                        ],flex:1,paddingTop:25,
+                        ],flex:1,
                      }}>
+                        <LinearGradient style ={{height,width,paddingTop:25}} colors = {['#43C6AC','#F8FFAE']}>
                         <Header selectedDevice = {jsonListDevice.selectedDevice?jsonListDevice.selectedDevice:{macId:'nan',nameDevice:'nan'}}/>
                         <View style = {viewInformation}>
                             <View style = {subViewInformation2}>
@@ -178,13 +208,12 @@ class MainScreen extends Component {
                             <Text style = {textInformation2}>Đèn quang hợp</Text>
                         </View>
                         {this.props.animationMain.animation?<TouchableWithoutFeedback onPress={()=>this.props.load(false)}><View style = {{height:height-10,width,position:'absolute',backgroundColor:'rgba(0,0,0,0.1)'}}/></TouchableWithoutFeedback>:null}
+                        </LinearGradient>
                     </Animated.View>
 
-                    </View>
                     {this.props.visible==true?<ConfigView client={this.client}/>:null}
                     {this.props.visibleListDevice==true?<ListDevice control={this.props} client={this.client} selectedDevice={this.props.jsonListDevice.selectedDevice} listDevice = {this.props.jsonListDevice.listDevice}/>:null}
                     {visibleConnectView==true?<LoadingConnectView visible={visibleConnectView}/>:null}
-
                 </LinearGradient>
             </View>
         )

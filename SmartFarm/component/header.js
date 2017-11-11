@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Text,View,Dimensions,TouchableWithoutFeedback,TouchableHighlight} from 'react-native';
+import {Text,View,Dimensions,TouchableWithoutFeedback,TouchableHighlight, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import * as action from '../reducer/action'
@@ -14,24 +14,25 @@ class Header extends Component {
         const {textInformation} = style
         return(
             <View style = {container}>
-                <TouchableWithoutFeedback onPress = {()=>{
+                <TouchableOpacity onPress = {()=>{
                     this.props.load(!this.props.animationMain.animation)
+                    
                 }}>
                     <Icon style = {{left:10}} name={'bars'} color={'white'} size={25}/>
-                </TouchableWithoutFeedback>
-                <TouchableHighlight onPress = {()=>{this.props.loadingListDevice(!this.props.visibleListDevice)}}>
+                </TouchableOpacity>
+                <TouchableOpacity onPress = {()=>{this.props.loadingListDevice(!this.props.visibleListDevice)}}>
                     <View style = {{flexDirection:'row',width:width-100,height:30,alignItems:'center',justifyContent:'center'}}>
                         <View style = {{height:30,alignItems:'center',justifyContent:'center'}}>
                             <Text style = {{color:'white',fontWeight:'bold'}}>{this.props.selectedDevice.nameDevice}</Text>
                         </View>
                         <Icon color={'rgba(255,255,255,0.5)'} style = {{left:5}} name={'level-down'} size={20}/>
                     </View>
-                </TouchableHighlight>
-                <TouchableHighlight onPress = {()=>{
+                </TouchableOpacity>
+                <TouchableOpacity onPress = {()=>{
                     this.props.visibleConfig(!this.props.visible)
                 }}>
                     <Icon style = {{right:10}} name={'cog'} color={'white'} size={25}/>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>         
         )
     }

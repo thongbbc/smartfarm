@@ -23,7 +23,7 @@ export default (state = defaultvalue,actions) => {
             Animated.parallel([
                 createAnimation(state.animationMain1,duration,-850),
                 createAnimation(state.animationMain2,duration,1),
-                createAnimation(state.animationMain3,duration,1)
+                createAnimation(state.animationMain3,duration,1),
             ]).start()
             
             return {
@@ -35,7 +35,7 @@ export default (state = defaultvalue,actions) => {
             Animated.parallel([
                 createAnimation(state.animationMain1,2000,1),
                 createAnimation(state.animationMain2,duration,0),
-                createAnimation(state.animationMain3,duration,0)
+                createAnimation(state.animationMain3,duration,0),
             ]).start()
             return {
                 ...state,

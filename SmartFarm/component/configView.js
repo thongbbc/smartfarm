@@ -78,20 +78,20 @@ class ConfigView extends Component {
                                 <Icon name = {'wrench'} size={height/9} color={'gray'}/>
                                 <Text style = {titleText}>Thiết lập thiết bị</Text>
                                 <TextInput 
-                                value = {this.state.nameWifi}
-                                autoCorrect={false}
-                                onChangeText = {(text)=>this.setState({nameWifi:text})}
-                                style = {textInput} placeholder='Tên wifi'/>
+                                    value = {this.state.nameWifi}
+                                    autoCorrect={false}
+                                    onChangeText = {(text)=>this.setState({nameWifi:text})}
+                                    style = {textInput} placeholder='Tên wifi'/>
                                 <TextInput 
-                                value = {this.state.passWifi}
-                                autoCorrect={false}
-                                onChangeText = {(text)=>this.setState({passWifi:text})}
-                                style = {textInput} placeholder='Mật khẩu wifi'/>
+                                    value = {this.state.passWifi}
+                                    autoCorrect={false}
+                                    onChangeText = {(text)=>this.setState({passWifi:text})}
+                                    style = {textInput} placeholder='Mật khẩu wifi'/>
                                 <TextInput 
-                                value = {this.state.nameDevice}
-                                autoCorrect={false}
-                                onChangeText = {(text)=>this.setState({nameDevice:text})}
-                                style = {textInput} placeholder='Tên thiết bị'/>
+                                    value = {this.state.nameDevice}
+                                    autoCorrect={false}
+                                    onChangeText = {(text)=>this.setState({nameDevice:text})}
+                                    style = {textInput} placeholder='Tên thiết bị'/>
                                 <View style ={{justifyContent:'flex-end',flex:1}}>
                                     <TouchableHighlight style = {clickAbleButton} onPress={this._configStart.bind(this)}>
                                         <Text style = {button}>

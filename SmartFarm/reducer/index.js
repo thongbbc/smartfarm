@@ -5,6 +5,8 @@ import reducer3 from './reducer3'
 import reducer4 from './reducer4'
 import reducer5 from './reducer5'
 import reducer6 from './reducer6'
+import reducer7 from './reducer7'
+import reducer8 from './reducer8'
 
 export default combineReducers({
     animationMainScreen:reducer1,
@@ -12,5 +14,7 @@ export default combineReducers({
     stateLoading:reducer3,
     device:reducer4,
     visibleListDevice:reducer5,
-    stateAllData:reducer6
+    stateAllData:reducer6,
+    visibleDatePickerIOS:reducer7,
+    dataSetTime:reducer8
 })
