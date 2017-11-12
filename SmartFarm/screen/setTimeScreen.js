@@ -9,6 +9,7 @@ import ComponentDatePickerIOS from '../component/datepickerIOS'
 import {width,height} from '../helperScreen'
 import SquareView from '../component/squareView'
 import ListDeviceSetTime from '../component/listDeviceSetTime'
+import CustomPickerViewIOS from '../component/customPickerView'
 class SetTimeScreen extends Component {
     constructor(props) {
         super(props)
@@ -17,6 +18,7 @@ class SetTimeScreen extends Component {
             kind:'time',
             kindOfData:0,
             deviceOfSubdevice:true,
+            visibleCustomPicker:false,
         }
     }
     async postForm(path, form) {
@@ -41,7 +43,7 @@ class SetTimeScreen extends Component {
         })
       }
     render() {
-        const {deviceOfSubdevice} = this.state
+        const {deviceOfSubdevice,visibleCustomPicker} = this.state
         const {container,textTitle,textTitle2} = style
         const {visibleDatePickerIOS,dataSetTime,visibleListDevice} = this.props
         
@@ -142,8 +144,7 @@ class SetTimeScreen extends Component {
                             <Text style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20}}>
                             {HOURDU!=''?parseInt(HOURDU)<10?('0'+HOURDU+':'):(HOURDU+':'):null}{parseInt(MINUTESDU)<10?'0'+MINUTESDU:MINUTESDU}</Text>
                             <TouchableOpacity onPress={()=>{
-                                this.setState({kind:'time',kindOfData:2})
-                                this.props.loadDatePickerIOS(true)
+                                this.setState({visibleCustomPicker:true})
                             }}>
                                 <Icon style = {{width:35,height:35,textAlign:'center',left:10,backgroundColor:'rgba(0,0,0,0.7)'}} name={'clock-o'} color={'white'} size={35}/>
                             </TouchableOpacity>
@@ -226,6 +227,7 @@ this.postForm("http://cretacam.ddns.net/hien123/setRules",
                     </SquareView>
                     {visibleDatePickerIOS?<ComponentDatePickerIOS kindOfData = {this.state.kindOfData} kind = {this.state.kind}/>:null}
                     {visibleListDevice?<ListDeviceSetTime deviceOfSubdevice={deviceOfSubdevice}/>:null}
+                    {visibleCustomPicker?<CustomPickerViewIOS fullState = {this}/>:null}
                 </LinearGradient>
             </View>
         )

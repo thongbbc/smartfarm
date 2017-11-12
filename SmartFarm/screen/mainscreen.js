@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Text,View,TouchableHighlight,Switch,Animated,Easing,AsyncStorage,TouchableWithoutFeedback, ScrollView, TouchableOpacity} from 'react-native';
+import {AppState,Text,View,TouchableHighlight,Switch,Animated,Easing,AsyncStorage,TouchableWithoutFeedback, ScrollView, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SquareView from '../component/squareView'
@@ -23,6 +23,13 @@ class MainScreen extends Component {
             listDevice:[],
             visibleConnectView : false,
         }
+    }
+    _handleAppStateChange = (nextAppState) => {
+        if (this.props.appState.match(/inactive|background/) && nextAppState === 'active') {
+            console.log('App has come to the foreground!')
+            this.reconnect()
+        }
+        this.props.changeAppState(nextAppState);
     }
     controlDevice(address,stateCurrent) {
         if (this.props.jsonListDevice.selectedDevice!=undefined) {
@@ -48,7 +55,11 @@ class MainScreen extends Component {
             data = '[]'
             this.props.getListDevice(data)
         })
-        this.reconnect()
+        AppState.addEventListener('change', this._handleAppStateChange);
+        this.reconnect();
+    }
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this._handleAppStateChange);
     }
     reconnect() {
         if (!this.client)
@@ -117,7 +128,7 @@ class MainScreen extends Component {
         return(
             <View style = {container}>
                 <LinearGradient style ={container} colors = {['#43C6AC','#F8FFAE']}>
-                    <View style = {{justifyContent:'flex-start',marginTop:50,position:'absolute',height,width:width/2}}>
+                    <View style = {{justifyContent:'flex-start',marginTop:height/10,position:'absolute',height,width:width/2}}>
                         <TouchableOpacity onPress={()=>{    
                             this.props.load(!this.props.animationMain.animation)                                                                                                        
                     // this.props.navigation.navigate('History', {name: 'Lucy'})
@@ -262,7 +273,8 @@ const mapStateToProps = (state) => {
         visible:state.getDeviceConfig.visible,
         jsonListDevice:state.device,
         visibleListDevice:state.visibleListDevice,
-        stateAllData : state.stateAllData
+        stateAllData : state.stateAllData,
+        appState: state.appState,        
     }
 }
 export default connect(mapStateToProps,action)(MainScreen);

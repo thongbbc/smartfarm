@@ -1,8 +1,13 @@
 import React from 'react';
 import {AsyncStorage} from 'react-native';
+changeAppState = (appState) => {
+    return {
+        type:'ChangeAppState',
+        value:appState
+    }
+}
 setTimeData =  (type,KIND='',MACID='',ACC='',DATEBEGIN='',MONTHBEGIN='',YEARBEGIN='',DATA='',
 HOURTIME='',MINUTESTIME='',HOURDU='',MINUTESDU='',STATE='',ADDR='',DELAYDATE ='') => {
-    debugger
     if (type)
         return {
             type:'setFullData',
@@ -141,5 +146,6 @@ select = (device) => {
         device:device
     }
 }
-export {setTimeData,loadDatePickerIOS,loadSide,select,setStateButton,setStateFan,setStateWater,setStateTemperature,
+export {changeAppState,
+    setTimeData,loadDatePickerIOS,loadSide,select,setStateButton,setStateFan,setStateWater,setStateTemperature,
     load,visibleConfig,startConfig,loading,saveDevice,getListDevice,loadingListDevice}

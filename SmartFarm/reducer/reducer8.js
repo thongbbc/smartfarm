@@ -1,18 +1,19 @@
+const date = new Date()
 const defaultValue = {
     MACID:'',
-    ACC:'',
-    DATEBEGIN:'',
-    MONTHBEGIN:'',
-    YEARBEGIN:'',
+    ACC:'default',
+    DATEBEGIN:date.getDate().toString(),
+    MONTHBEGIN:(date.getMonth()+1).toString(),
+    YEARBEGIN:date.getFullYear().toString(),
     KIND:'0',
     DATA:'',
-    HOURTIME:'',
-    MINUTESTIME:'',
-    HOURDU:'',
-    MINUTESDU:'',
+    HOURTIME:'0',
+    MINUTESTIME:'0',
+    HOURDU:'0',
+    MINUTESDU:'0',
     STATE:'0',
     ADDR:'DQH',
-    DELAYDATE:'1',
+    DELAYDATE:'0',
 }
 export default (state = defaultValue,actions) => {
     switch (actions.type) {

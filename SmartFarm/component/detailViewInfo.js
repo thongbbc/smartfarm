@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {Text,View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {width,height} from '../helperScreen'
 const DetailView = (props) => {
     const {container} = style
     const {textInformation} = style
@@ -11,7 +11,7 @@ const DetailView = (props) => {
         return(
         <View style = {{flex:1,alignItems:'center',flexDirection:'row'}}>
             <View style = {{flex:5,alignItems:'center'}}>
-                <Icon color='white' size={40} name={props.img} />  
+                <Icon color='white' size={width/8} name={props.img} />  
                 <Text style = {textInformation}>{props.title}</Text>   
             </View>
             <Text style = {{left:-20,flex:2,fontSize:20,color:'white'}}>{value?value:'0'}</Text>
@@ -20,7 +20,7 @@ const DetailView = (props) => {
         return(
             <View style = {{flex:1,alignItems:'center',flexDirection:'row'}}>
                 <View style = {{flex:2,alignItems:'center'}}>
-                    <Icon color='white' size={40} name={props.img} />  
+                    <Icon color='white' size={width/8} name={props.img} />  
                     <Text style = {textInformation}>{props.title}</Text>   
                 </View>
                 <Text style = {{flex:2,fontWeight:'bold',left:-20,flex:1,fontSize:18,color:value==true?'rgb(14, 239, 44)':'red'}}>{value==true?'HIGH':'LOW'}</Text>
