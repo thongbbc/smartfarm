@@ -1,13 +1,13 @@
 import React from 'react';
 import {AsyncStorage} from 'react-native';
 setTimeData =  (type,KIND='',MACID='',ACC='',DATEBEGIN='',MONTHBEGIN='',YEARBEGIN='',DATA='',
-HOURTIME='',MINUTESTIME='',HOURDU='',MINUTESDU='',STATE='') => {
+HOURTIME='',MINUTESTIME='',HOURDU='',MINUTESDU='',STATE='',ADDR='',DELAYDATE ='') => {
     debugger
     if (type)
         return {
             type:'setFullData',
             KIND,MACID,ACC,DATEBEGIN,MONTHBEGIN,YEARBEGIN,DATA,
-            MINUTESTIME,HOURDU,MINUTESDU,HOURTIME,STATE
+            MINUTESTIME,HOURDU,MINUTESDU,HOURTIME,STATE,ADDR,DELAYDATE
         }
     else {
        return {

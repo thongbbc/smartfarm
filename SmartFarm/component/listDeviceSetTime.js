@@ -7,6 +7,9 @@ import * as action from '../reducer/action'
 class ListDeviceSetTime extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            dataSubDevice: ['Đèn quang hợp','Máy bơm']
+        }
     }
     componentDidMount() {
         AsyncStorage.getItem('devices').then((data)=>{            
@@ -14,16 +17,26 @@ class ListDeviceSetTime extends Component {
             data = '[]'
             this.props.getListDevice(data)
         })
+
     }
     _renderItem(index, item) {
-        const {client,control} = this.props
+        const {client,control,deviceOfSubdevice} = this.props
         const color = index % 2 == 0
           ? 'rgba(0,0,0,0.02)'
           : 'rgba(255,255,255,0.5)'
+
         return (
           <View style = {{width:width - 60}}>
             <TouchableHighlight onPress = {()=>{
-                
+                if (deviceOfSubdevice)
+                {
+                    this.props.setTimeData(true,'',item.macId,'','','','','','','','','','')
+                    this.props.loadingListDevice(!this.props.visibleListDevice)
+                }
+                else{
+                    this.props.setTimeData(true,'','','','','','','','','','','','',index==0?'DQH':'MB')                    
+                    this.props.loadingListDevice(!this.props.visibleListDevice)
+                }
             }}>
               <View style={{
                 height: height / 9 - 5,
@@ -39,7 +52,7 @@ class ListDeviceSetTime extends Component {
                   fontWeight: '200',
                   color: 'black',
                   backgroundColor: 'transparent'
-                }}>{item.nameDevice}</Text>
+                }}>{deviceOfSubdevice?item.nameDevice:item}</Text>
               </View>
             </TouchableHighlight>
           </View>
@@ -56,7 +69,7 @@ class ListDeviceSetTime extends Component {
                         <View style = {container}>
                             <TouchableWithoutFeedback onPress={()=>{}}>
                                 <View style = {container2}> 
-                                    <FlatList style = {{width:width - 60,height:height/2,borderRadius:10,}} data={this.props.jsonListDevice.listDevice} keyExtractor= {(x,i) => i} renderItem={({index, item}) => this._renderItem(index, item)}/>
+                                    <FlatList style = {{width:width - 60,height:height/2,borderRadius:10,}} data={this.props.deviceOfSubdevice?this.props.jsonListDevice.listDevice:this.state.dataSubDevice} keyExtractor= {(x,i) => i} renderItem={({index, item}) => this._renderItem(index, item)}/>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

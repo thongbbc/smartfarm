@@ -10,12 +10,14 @@ const defaultValue = {
     MINUTESTIME:'',
     HOURDU:'',
     MINUTESDU:'',
-    STATE:'0'
+    STATE:'0',
+    ADDR:'DQH',
+    DELAYDATE:'1',
 }
 export default (state = defaultValue,actions) => {
     switch (actions.type) {
         case 'setFullData': {
-            const {KIND,DATA,MACID,ACC,DATEBEGIN,MONTHBEGIN,YEARBEGIN,HOURTIME,MINUTESTIME,HOURDU,MINUTESDU,STATE} = actions
+            const {DELAYDATE,ADDR,KIND,DATA,MACID,ACC,DATEBEGIN,MONTHBEGIN,YEARBEGIN,HOURTIME,MINUTESTIME,HOURDU,MINUTESDU,STATE} = actions
             var json = {
                 MACID:state.MACID,
                 ACC:state.ACC,
@@ -28,9 +30,20 @@ export default (state = defaultValue,actions) => {
                 MINUTESTIME:state.MINUTESTIME,
                 HOURDU:state.HOURDU,
                 MINUTESDU:state.MINUTESDU,
-                STATE:state.STATE
+                STATE:state.STATE,
+                ADDR:state.ADDR,
+                DELAYDATE:state.DELAYDATE
             }
-            if (actions.MACID) {
+            if (actions.DELAYDATE!='') {
+                if (actions.DELAYDATE == '0')
+                json.DELAYDATE = (parseInt(state.DELAYDATE) + 1).toString()
+                else
+                json.DELAYDATE = (parseInt(state.DELAYDATE) - 1).toString()
+            } 
+            if (actions.ADDR!='') {
+                json.ADDR = actions.ADDR 
+            } 
+            if (actions.MACID!='') {
                 json.MACID = actions.MACID 
             } 
             if (actions.ACC != '') {

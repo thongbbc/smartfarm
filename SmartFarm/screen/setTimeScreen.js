@@ -15,12 +15,12 @@ class SetTimeScreen extends Component {
         this.state = {
             time:new Date(),
             kind:'time',
-            kindOfData:0
+            kindOfData:0,
+            deviceOfSubdevice:true,
         }
     }
     async postForm(path, form) {
         const str = [];
-        alert(JSON.stringify(form))        
         for (let p in form) {
           str.push(encodeURIComponent(p) + "=" + encodeURIComponent(form[p]));
         }
@@ -41,16 +41,17 @@ class SetTimeScreen extends Component {
         })
       }
     render() {
+        const {deviceOfSubdevice} = this.state
         const {container,textTitle,textTitle2} = style
         const {visibleDatePickerIOS,dataSetTime,visibleListDevice} = this.props
         
-        const {MACID,ACC,DATEBEGIN,MONTHBEGIN,YEARBEGIN,KIND,DATA,MINUTESTIME,HOURDU,MINUTESDU,STATE,HOURTIME} = dataSetTime
+        const {ADDR,MACID,ACC,DATEBEGIN,DELAYDATE,MONTHBEGIN,YEARBEGIN,KIND,DATA,MINUTESTIME,HOURDU,MINUTESDU,STATE,HOURTIME} = dataSetTime
         return (
             <View style = {container}>
                 <LinearGradient style ={{flex:1,paddingLeft:5,paddingRight:5,paddingTop:25}} colors = {['#43C6AC','#F8FFAE']}>
                     <HeaderBackView navigation = {this.props.navigation} nameHeader = 'Hẹn Giờ'/>
                     <SquareView>
-                        <View style = {{width:width-30,justifyContent:'center',flex:1,flexDirection:'row',alignItems:'center',marginBottom:5}}>
+                        {/* <View style = {{width:width-30,justifyContent:'center',flex:1,flexDirection:'row',alignItems:'center',marginBottom:5}}>
                             <Text style = {textTitle}>Theo ngày / Theo Thứ</Text>
                             <Switch
                                 style = {{left:20}}
@@ -62,15 +63,30 @@ class SetTimeScreen extends Component {
                                 thumbTintColor="gray"
                                 tintColor="white"
                                 value={KIND=='1'?true:false} />
+                        </View> */}
+
+                        <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                            <Text style = {textTitle2}>Thiết bị:</Text>
+                            <Text style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,width:width/2-20,color:'gray'}}>{
+                                (this.props.jsonListDevice.listDevice.find((value)=>value.macId==MACID))?(this.props.jsonListDevice.listDevice.find((value)=>value.macId==MACID)).nameDevice:'nan'}</Text>
+                            <TouchableOpacity onPress={()=>{
+                                this.setState({deviceOfSubdevice:true})
+                                this.props.loadingListDevice(!this.props.visibleListDevice)}}>
+                                <Icon style = {{width:35,height:35,textAlign:'center',left:10,backgroundColor:'rgba(0,0,0,0.7)'}} name={'cog'} color={'white'} size={35}/>
+                            </TouchableOpacity>
                         </View>
 
                         <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center',marginBottom:10}}>
-                            <Text style = {textTitle2}>Thiết bị:</Text>
-                            <Text style = {{left:10,height:35,backgroundColor:'white',fontSize:20,color:'white',width:width/2-20}}></Text>
-                            <TouchableOpacity onPress={()=>{this.props.loadingListDevice(!this.props.visibleListDevice)}}>
-                                <Icon style = {{width:35,height:35,textAlign:'center',left:10,backgroundColor:'rgba(0,0,0,0.7)'}} name={'plus'} color={'white'} size={35}/>
+                            <Text style = {textTitle2}>Thiết bị Con</Text>
+                            <Text style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,width:width/2-20,color:'gray'}}>{
+                                ADDR=='DQH'?'Đèn quang hợp':'Máy bơm'}</Text>
+                            <TouchableOpacity onPress={()=>{
+                                this.setState({deviceOfSubdevice:false})                                                                
+                                this.props.loadingListDevice(!this.props.visibleListDevice)}}>
+                                <Icon style = {{width:35,height:35,textAlign:'center',left:10,backgroundColor:'rgba(0,0,0,0.7)'}} name={'cog'} color={'white'} size={35}/>
                             </TouchableOpacity>
                         </View>
+
 
                         <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'flex-start',marginBottom:10}}>
                             <Text style = {textTitle2}>Bắt đầu: </Text>
@@ -99,6 +115,28 @@ class SetTimeScreen extends Component {
                             </View>
                         </View>
 
+
+                        <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                            <Text style = {textTitle2}>Cách ngày:</Text>
+                            <Text style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20 -35}}>
+                            {DELAYDATE!=''?parseInt(DELAYDATE)<10&&(DELAYDATE>=0)?('0'+DELAYDATE):(DELAYDATE):null}</Text>
+                            <TouchableOpacity onPress={()=>{
+                                if (parseInt(DELAYDATE) == 0) {
+                                    alert("Lỗi! Giá trị tối thiểu là 0")
+                                } else 
+                                this.props.setTimeData(true,'','','','','','','',
+                                '','','','','','','1')                    
+                            }}>
+                                <Icon style = {{width:35,height:35,textAlign:'center',left:10,backgroundColor:'rgba(0,0,0,0.7)'}} name={'arrow-down'} color={'red'} size={35}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>{
+                                this.props.setTimeData(true,'','','','','','','',
+                                '','','','','','','0')            
+                            }}>
+                                <Icon style = {{width:35,height:35,textAlign:'center',left:10,backgroundColor:'rgba(0,0,0,0.7)'}} name={'arrow-up'} color={'green'} size={35}/>
+                            </TouchableOpacity>
+                        </View>
+
                         <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center',marginBottom:10}}>
                             <Text style = {textTitle2}>Duy trì:</Text>
                             <Text style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20}}>
@@ -113,7 +151,7 @@ class SetTimeScreen extends Component {
 
                         
 
-                        <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center',marginBottom:10}}>
+                        <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center',marginBottom:30}}>
                             <Text style = {{
                                 backgroundColor:'transparent',
                                 color:'white',
@@ -124,8 +162,8 @@ class SetTimeScreen extends Component {
                             <TouchableOpacity onPress = {()=>{
                                 const value = STATE == '100'?'0':'100'
                                 this.props.setTimeData(true,'','','','','','','','','','','',value)}}>
-                                <View style = {{
-                                    alignItems:'center',left:10,height:35,backgroundColor:'gray',width:width/3}}>
+                                <View style = {{justifyContent:'center',borderRadius:70/2,
+                                    alignItems:'center',left:10,height:70,backgroundColor:'gray',width:70}}>
                                     <Icon style = {{
                                         width:35,height:35,textAlign:'center',backgroundColor:'gray'
                                     }} name={'lightbulb-o'} color={STATE=='100'?'yellow':'black'} size={35}/>
@@ -135,34 +173,59 @@ class SetTimeScreen extends Component {
 
                         <TouchableOpacity onPress = {()=>{
 
-
-
+const addr = ADDR=='DQH'?'1':'2'
+const begin = {
+    DATE:DATEBEGIN,
+    MONTH:MONTHBEGIN,
+    YEAR:YEARBEGIN
+}
+const time = {
+    HOUR:HOURTIME,
+    MINUTES:MINUTESTIME
+}
+const du = {
+    HOUR:HOURDU,
+    MINUTES:MINUTESDU
+}
+const mode = {
+    kind:'1',
+    data:DELAYDATE
+}
 const json = 
-{MACID:"ESPnccho",ACC:"",ADDR:"8",BEGIN:"23/11/2017",MODE:"3244"
-,STATE:"100",TIME:"safdsafs",DU:"sadfsa"}
-  const jsonString = JSON.stringify(json)
-  this.postForm("http://cretacam.ddns.net/hien123/setRules",
-  {'data':jsonString})
+{MACID:MACID,ACC:ACC,ADDR:addr,BEGIN:begin,MODE:mode
+    ,STATE:STATE,TIME:time,DU:du}
+const jsonString = JSON.stringify(json)
+this.postForm("http://cretacam.ddns.net/hien123/setRules",
+{'data':jsonString})
 
 
+// var convertedJson = []
+// convertedJson.push({macId:"hahahaha",nameDevice:'kakakakakakakak'})
+// convertedJson.push({macId:"dsad",nameDevice:'adadadada'})
 
+// convertedJson.push({macId:"dasd",nameDevice:'fsfsfsfs'})
+// convertedJson.push({macId:"hahahadsadadha",nameDevice:'dhdhdhd'})
 
+// try {
+//     AsyncStorage.setItem('devices', JSON.stringify(convertedJson)); 
+// } catch(err){
+
+// }
 
                                 }}
                                 >
                                 <View style = {{
-                                    alignItems:'center',left:10,height:35,backgroundColor:'gray',width:width/3}}>
+                                    alignItems:'center',height:50,backgroundColor:'gray',width:width-20,justifyContent:'center'}}>
                                     <Icon style = {{
                                         width:35,height:35,textAlign:'center',backgroundColor:'gray'
-                                    }} name={'lightbulb-o'} color={STATE=='100'?'yellow':'black'} size={35}/>
+                                    }} name={'paper-plane'} color={'white'} size={35}/>
                                 </View>
                             </TouchableOpacity>
 
 
                     </SquareView>
-                    <TouchableHighlight style = {{flex:0.1}} onPress={()=>{this.props.loadDatePickerIOS(true)}}><Text style = {{height:30,width:30}}>HIHIHIHIHI</Text></TouchableHighlight>
                     {visibleDatePickerIOS?<ComponentDatePickerIOS kindOfData = {this.state.kindOfData} kind = {this.state.kind}/>:null}
-                    {visibleListDevice?<ListDeviceSetTime/>:null}
+                    {visibleListDevice?<ListDeviceSetTime deviceOfSubdevice={deviceOfSubdevice}/>:null}
                 </LinearGradient>
             </View>
         )
@@ -194,7 +257,8 @@ const mapStateToProps = (state) => {
         visibleListDevice:state.visibleListDevice,
         stateAllData : state.stateAllData,
         visibleDatePickerIOS: state.visibleDatePickerIOS,
-        dataSetTime:state.dataSetTime
+        dataSetTime:state.dataSetTime,
+
     }
 }
 export default connect(mapStateToProps,action)(SetTimeScreen);
