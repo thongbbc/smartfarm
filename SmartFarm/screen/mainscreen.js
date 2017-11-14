@@ -131,11 +131,11 @@ class MainScreen extends Component {
                     <View style = {{justifyContent:'flex-start',marginTop:height/10,position:'absolute',height,width:width/2}}>
                         <TouchableOpacity onPress={()=>{    
                             this.props.load(!this.props.animationMain.animation)                                                                                                        
-                    // this.props.navigation.navigate('History', {name: 'Lucy'})
+                            this.props.navigation.navigate('ManageDeviceScreen', {name: 'Lucy'})
                         }}>
                             <View style = {{flexDirection:'row',alignItems:'flex-start',backgroundColor:'rgba(0,0,0,0.1)',margin:10,alignItems:'center',height:50,justifyContent:'center'}}>
                                 <Icon style = {{right:10}} name = {'cogs'} size={20} color={'white'}/>
-                                <Text style = {{color:'white',fontSize:17,backgroundColor:'transparent',fontWeight:'600'}}>Thiết bị</Text>
+                                <Text allowFontScaling={false} style = {{color:'white',fontSize:17,backgroundColor:'transparent',fontWeight:'600'}}>Thiết bị</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>{
@@ -143,7 +143,7 @@ class MainScreen extends Component {
                             this.props.navigation.navigate('History', {navigation: this.props.navigation})}}>
                             <View style = {{flexDirection:'row',alignItems:'flex-start',backgroundColor:'rgba(0,0,0,0.1)',margin:10,alignItems:'center',height:50,justifyContent:'center'}}>
                                 <Icon style = {{right:10}} name = {'history'} size={20} color={'white'}/>
-                                <Text style = {{color:'white',fontSize:17,backgroundColor:'transparent',fontWeight:'600'}}>Lịch sử</Text>
+                                <Text allowFontScaling={false} style = {{color:'white',fontSize:17,backgroundColor:'transparent',fontWeight:'600'}}>Lịch sử</Text>
                             </View>
                         </TouchableOpacity>                     
                         <TouchableOpacity onPress={()=>{
@@ -152,7 +152,7 @@ class MainScreen extends Component {
                             }}>
                             <View style = {{flexDirection:'row',alignItems:'flex-start',backgroundColor:'rgba(0,0,0,0.1)',margin:10,alignItems:'center',height:50,justifyContent:'center'}}>
                                 <Icon style = {{right:10}} name = {'clock-o'} size={20} color={'white'}/>
-                                <Text style = {{color:'white',fontSize:17,backgroundColor:'transparent',fontWeight:'600'}}>Hẹn giờ</Text>
+                                <Text allowFontScaling={false} style = {{color:'white',fontSize:17,backgroundColor:'transparent',fontWeight:'600'}}>Hẹn giờ</Text>
                             </View>
                         </TouchableOpacity>           
                     </View>
@@ -186,7 +186,7 @@ class MainScreen extends Component {
                                         </View>
                                     </LinearGradient>
                                     </TouchableHighlight> 
-                                    <Text style = {textInformation}>Máy bơm</Text>  
+                                    <Text allowFontScaling={false} style = {textInformation}>Máy bơm</Text>  
 
                                 </SquareView>
                             </View>
@@ -195,7 +195,7 @@ class MainScreen extends Component {
                                     <DetailView kind={true} value =  {stateTemperature?stateTemperature.toString():'0'} img='thermometer' title='Nhiệt độ'/>                
                                 </SquareView>
                                 <SquareView>
-                                    <DetailView kind={false} value =  {stateWater?stateWater:false} img='tint' title='Độ ẩm'/>                
+                                    <DetailView kind={false} value =  {stateWater?stateWater:false} img='tint' title='Mực nước'/>                
                                 </SquareView>
                             </View>
                         </View>
@@ -216,7 +216,7 @@ class MainScreen extends Component {
                                 </View>
                             </LinearGradient>
                             </TouchableHighlight>
-                            <Text style = {textInformation2}>Đèn quang hợp</Text>
+                            <Text allowFontScaling={false} style = {textInformation2}>Đèn quang hợp</Text>
                         </View>
                         {this.props.animationMain.animation?<TouchableWithoutFeedback onPress={()=>this.props.load(false)}><View style = {{height:height-10,width,position:'absolute',backgroundColor:'rgba(0,0,0,0.1)'}}/></TouchableWithoutFeedback>:null}
                         </LinearGradient>

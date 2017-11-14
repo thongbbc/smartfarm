@@ -9,7 +9,7 @@ const LoadingView = (props) => {
         <View style = {container}>
             <Spinner isVisible={props.visible} size={width/4} type={'FadingCircle'} color={'#FFF'}/>
             <View style={{width:100,justifyContent:'center',flexDirection:'row',top:30}}>
-                <Text style={{right:5,color:'white',fontWeight:'bold'}}>Đang thiết lập </Text>
+                <Text allowFontScaling={false} style={{right:5,color:'white',fontWeight:'bold'}}>Đang thiết lập </Text>
                 <Spinner isVisible={props.visible} size={20} type={'ThreeBounce'} color={'#FFF'}/>
             </View>
         </View>

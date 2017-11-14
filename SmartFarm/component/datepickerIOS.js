@@ -28,7 +28,7 @@ class ComponentDatePickerIOS extends Component {
                             mode={this.props.kind}
                             timeZoneOffsetInMinutes={(-1) * ((new Date()).getTimezoneOffset() / 60)* 60}
                             onDateChange={this.onDateChange.bind(this)}
-                            minuteInterval={5}/>
+                            minuteInterval={1}/>
                         <View style = {{justifyContent:'space-between',flexDirection:'row',height:40,width:width-40,backgroundColor:'transparent',paddingLeft:10,paddingRight:10}}>
                             <TouchableOpacity onPress = {()=>{
                                 if (kindOfData == 0) {
@@ -46,12 +46,12 @@ class ComponentDatePickerIOS extends Component {
                                 }
                             }}>
                             <View style = {{justifyContent:'center',backgroundColor:'rgba(0,0,0,0.3)',alignItems:'center',height:40,width:width/2 - 40}}>
-                                <Text style = {{fontSize:17,color:'blue'}}>Đồng ý</Text>
+                                <Text allowFontScaling={false} style = {{fontSize:17,color:'blue'}}>Đồng ý</Text>
                             </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = {()=>{this.props.loadDatePickerIOS(false)}}>
                             <View style = {{justifyContent:'center',backgroundColor:'rgba(0,0,0,0.3)',alignItems:'center',height:40,width:width/2 - 40}}>
-                                <Text style = {{fontSize:17,color:'red'}}>Hủy</Text>
+                                <Text allowFontScaling={false} style = {{fontSize:17,color:'red'}}>Hủy</Text>
                             </View>
                             </TouchableOpacity>
 

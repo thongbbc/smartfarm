@@ -25,11 +25,46 @@ getData = (data) => {
         selectedDevice:{macID:'nan',nameDevice:'nan'}
     }
 }
+removeDevice = (macId,nameDevice,data) => {
+    var convertedJson = []
+    debugger
+    if (data && data !='')              
+        convertedJson = JSON.parse(data)
+        convertedJson.map((value,index)=> {
+            if(value.macId == macId) {
+                convertedJson.splice(index,1)
+            }
+        })
+        if (convertedJson.length == 0) {
+            convertedJson = ''
+        }
+        try {
+            AsyncStorage.setItem('devices', JSON.stringify(convertedJson)); 
+            if (convertedJson.length!=0)     
+                return {
+                    listDevice:convertedJson,
+                    selectedDevice:convertedJson[0]
+                }
+            else {
+                return {
+                    listDevice:[],
+                    selectedDevice:{macID:'nan',nameDevice:'nan'}
+                }
+            }
+        } catch (error) {
+        }
+        return {
+            listDevice:convertedJson,
+            selectedDevice:{macID:'nan',nameDevice:'nan'}
+        }
+    
+}    
 saveData = (macId,nameDevice,data) => {
     var jsonSave = {
         macId:macId,
         nameDevice:nameDevice
     }
+    debugger
     var convertedJson = []
     if (data && data !='')              
         convertedJson = JSON.parse(data)
@@ -64,6 +99,9 @@ export default  (state = defaultState,actions) => {
         }
         case 'select': {
             return selectDevice(state,actions.device);
+        }
+        case 'remove': {
+            return removeDevice(actions.macId,actions.nameDevice,actions.data)
         }
         default:return state;
     }

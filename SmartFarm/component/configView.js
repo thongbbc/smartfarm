@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Keyboard,View,Text,TouchableWithoutFeedback,TextInput,TouchableHighlight,AsyncStorage} from 'react-native';
+import {KeyboardAvoidingView,Keyboard,View,Text,TouchableWithoutFeedback,TextInput,TouchableHighlight,AsyncStorage} from 'react-native';
 import {width,height,nameTopicSend,nameTopicSub} from '../helperScreen'
 import * as action from '../reducer/action'
 import {connect} from 'react-redux';
@@ -8,6 +8,7 @@ import Smartconfig from 'react-native-smartconfig';
 import LoadingView from './loadingView'
 import {Client, Message} from 'react-native-paho-mqtt';
 import {sendGetAllData} from '../screen/callBackMQTT'
+import { NetworkInfo } from 'react-native-network-info';
 
 class ConfigView extends Component {
     constructor(props) {
@@ -19,13 +20,19 @@ class ConfigView extends Component {
         }
     }
     componentDidMount() {
+        NetworkInfo.getSSID(ssid => {
+            if (ssid != undefined) {
+                this.setState({nameWifi: ssid})
+            }
+          });
+        this.setState({passWifi:'',nameDevice:''})
     }
     _configStart() {
-        this.props.loading(true)
         const {nameWifi,passWifi,nameDevice} = this.state;
         const self= this
         Keyboard.dismiss()
         if (nameWifi != '' && passWifi != '' && nameDevice != '') {
+            this.props.loading(true)            
             Smartconfig.start({
                 type: 'esptouch',
                 ssid: nameWifi,
@@ -39,8 +46,9 @@ class ConfigView extends Component {
                     // this.props.startConfig(true,macId,nameDevice)
                 })
                 const {client} = self.props
-                AsyncStorage.getItem('devices').then((data)=>{                        
-                    if (data == undefined) {
+                AsyncStorage.getItem('devices').then((data)=>{    
+                    debugger                    
+                    if (data == undefined || data == '' || data == "\"\"") {
                         data = '[]'
                         self.props.saveDevice(macId,nameDevice,data) 
                         client.subscribe(nameTopicSub(macId))        
@@ -72,29 +80,33 @@ class ConfigView extends Component {
             <View style = {superContainer1}>
                 <TouchableWithoutFeedback onPress={()=>{this.props.visibleConfig(!this.props.visible)}}>
                     <View style = {superContainer}>
+                    <KeyboardAvoidingView behavior={"position"} keyboardVerticalOffset={30}>
                         <View style = {container}>
-                            <TouchableWithoutFeedback onPress={()=>{}}>
+                            <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
                             <View style = {container2}> 
                                 <Icon name = {'wrench'} size={height/9} color={'gray'}/>
-                                <Text style = {titleText}>Thiết lập thiết bị</Text>
+                                <Text allowFontScaling={false} style = {titleText}>Thiết lập thiết bị</Text>
                                 <TextInput 
+                                allowFontScaling={false}
                                     value = {this.state.nameWifi}
                                     autoCorrect={false}
                                     onChangeText = {(text)=>this.setState({nameWifi:text})}
                                     style = {textInput} placeholder='Tên wifi'/>
                                 <TextInput 
+                                allowFontScaling={false}
                                     value = {this.state.passWifi}
                                     autoCorrect={false}
                                     onChangeText = {(text)=>this.setState({passWifi:text})}
                                     style = {textInput} placeholder='Mật khẩu wifi'/>
                                 <TextInput 
+                                allowFontScaling={false}
                                     value = {this.state.nameDevice}
                                     autoCorrect={false}
                                     onChangeText = {(text)=>this.setState({nameDevice:text})}
                                     style = {textInput} placeholder='Tên thiết bị'/>
                                 <View style ={{justifyContent:'flex-end',flex:1}}>
                                     <TouchableHighlight style = {clickAbleButton} onPress={this._configStart.bind(this)}>
-                                        <Text style = {button}>
+                                        <Text allowFontScaling={false} style = {button}>
                                             Thiết lập
                                         </Text>
                                     </TouchableHighlight>
@@ -102,6 +114,7 @@ class ConfigView extends Component {
                             </View>
                             </TouchableWithoutFeedback>
                         </View>
+                        </KeyboardAvoidingView>
                     </View>
                 </TouchableWithoutFeedback>
             </View>

@@ -37,7 +37,8 @@ class CustomPickerViewIOS extends Component {
         const {selectedValue1,selectedValue2} = this.state
         return(
             <View style={{position:'absolute',width,height,justifyContent:'center',alignItems:'center'}}>
-                <TouchableOpacity style = {{position:'absolute',width,height,justifyContent:'center',alignItems:'center'}} onPress = {()=>{this.props.loadDatePickerIOS(false)}}>            
+                <TouchableOpacity style = {{position:'absolute',width,height,justifyContent:'center',alignItems:'center'}} onPress = {()=>{
+                    this.props.fullState.setState({visibleCustomPicker:false})}}>            
                     <View style = {{position:'absolute',backgroundColor:'rgba(0,0,0,0.5)',width,height,justifyContent:'center',alignItems:'center'}}>
                     <TouchableWithoutFeedback>
                     <View style = {{width:width-40,marginLeft:10,marginRight:10,backgroundColor:'white',borderRadius:10}}>
@@ -50,8 +51,8 @@ class CustomPickerViewIOS extends Component {
                         </Picker>
                     </View>
                     <View style = {{flexDirection:'row',marginBottom:20}}> 
-                        <Text style = {{fontSize:20,color:'gray',textAlign:'center',height:30,width:width/2-20}}>Giờ</Text>
-                        <Text style = {{fontSize:20,color:'gray',textAlign:'center',height:30,width:width/2-20}}>Phút</Text>
+                        <Text allowFontScaling={false} style = {{fontSize:20,color:'gray',textAlign:'center',height:30,width:width/2-20}}>Giờ</Text>
+                        <Text allowFontScaling={false} style = {{fontSize:20,color:'gray',textAlign:'center',height:30,width:width/2-20}}>Phút</Text>
                     </View>
                         <View style = {{marginBottom:20,justifyContent:'space-between',flexDirection:'row',height:40,width:width-40,backgroundColor:'transparent',paddingLeft:10,paddingRight:10}}>
                             <TouchableOpacity onPress = {()=>{
@@ -60,12 +61,12 @@ selectedValue1,selectedValue2,'')
                                this.props.fullState.setState({visibleCustomPicker:false})
                             }}>
                             <View style = {{justifyContent:'center',backgroundColor:'rgba(0,0,0,0.3)',alignItems:'center',height:40,width:width/2 - 40}}>
-                                <Text style = {{fontSize:17,color:'blue'}}>Đồng ý</Text>
+                                <Text allowFontScaling={false} style = {{fontSize:17,color:'blue'}}>Đồng ý</Text>
                             </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress = {()=>{this.props.fullState.setState({visibleCustomPicker:false})}}>
                             <View style = {{justifyContent:'center',backgroundColor:'rgba(0,0,0,0.3)',alignItems:'center',height:40,width:width/2 - 40}}>
-                                <Text style = {{fontSize:17,color:'red'}}>Hủy</Text>
+                                <Text allowFontScaling={false} style = {{fontSize:17,color:'red'}}>Hủy</Text>
                             </View>
                             </TouchableOpacity>
 

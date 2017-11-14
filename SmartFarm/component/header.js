@@ -23,7 +23,7 @@ class Header extends Component {
                 <TouchableOpacity onPress = {()=>{this.props.loadingListDevice(!this.props.visibleListDevice)}}>
                     <View style = {{flexDirection:'row',width:width-100,height:30,alignItems:'center',justifyContent:'center'}}>
                         <View style = {{height:30,alignItems:'center',justifyContent:'center'}}>
-                            <Text style = {{color:'white',fontWeight:'bold'}}>{this.props.selectedDevice.nameDevice}</Text>
+                            <Text allowFontScaling={false} style = {{color:'white',fontWeight:'bold'}}>{this.props.selectedDevice.nameDevice}</Text>
                         </View>
                         <Icon color={'rgba(255,255,255,0.5)'} style = {{left:5}} name={'level-down'} size={20}/>
                     </View>

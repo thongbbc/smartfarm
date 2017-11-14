@@ -104,6 +104,14 @@ saveDevice = (macId,nameDevice,data) => {
             nameDevice:nameDevice
         }
 }
+removeDevice = (macId,nameDevice,data) => {
+    return  {
+            type:'remove',
+            macId:macId,
+            data:data,
+            nameDevice:nameDevice
+        }
+}
 loadingListDevice = (check) => {
     if (check) 
         return {
@@ -146,6 +154,6 @@ select = (device) => {
         device:device
     }
 }
-export {changeAppState,
+export {removeDevice,changeAppState,
     setTimeData,loadDatePickerIOS,loadSide,select,setStateButton,setStateFan,setStateWater,setStateTemperature,
     load,visibleConfig,startConfig,loading,saveDevice,getListDevice,loadingListDevice}

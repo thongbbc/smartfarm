@@ -45,7 +45,7 @@ class ListDeviceSetTime extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-                <Text style={{
+                <Text allowFontScaling={false} style={{
                   fontSize: 20,
                   width:width - 60,
                   textAlign: 'center',

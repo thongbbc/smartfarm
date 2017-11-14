@@ -68,8 +68,8 @@ class SetTimeScreen extends Component {
                         </View> */}
 
                         <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                            <Text style = {textTitle2}>Thiết bị:</Text>
-                            <Text style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,width:width/2-20,color:'gray'}}>{
+                            <Text allowFontScaling={false} style = {textTitle2}>Thiết bị:</Text>
+                            <Text allowFontScaling={false} style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,width:width/2-20,color:'gray'}}>{
                                 (this.props.jsonListDevice.listDevice.find((value)=>value.macId==MACID))?(this.props.jsonListDevice.listDevice.find((value)=>value.macId==MACID)).nameDevice:'nan'}</Text>
                             <TouchableOpacity onPress={()=>{
                                 this.setState({deviceOfSubdevice:true})
@@ -79,8 +79,8 @@ class SetTimeScreen extends Component {
                         </View>
 
                         <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center',marginBottom:10}}>
-                            <Text style = {textTitle2}>Thiết bị Con</Text>
-                            <Text style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,width:width/2-20,color:'gray'}}>{
+                            <Text allowFontScaling={false} style = {textTitle2}>Thiết bị Con</Text>
+                            <Text allowFontScaling={false} style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,width:width/2-20,color:'gray'}}>{
                                 ADDR=='DQH'?'Đèn quang hợp':'Máy bơm'}</Text>
                             <TouchableOpacity onPress={()=>{
                                 this.setState({deviceOfSubdevice:false})                                                                
@@ -91,10 +91,10 @@ class SetTimeScreen extends Component {
 
 
                         <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'flex-start',marginBottom:10}}>
-                            <Text style = {textTitle2}>Bắt đầu: </Text>
+                            <Text allowFontScaling={false} style = {textTitle2}>Bắt đầu: </Text>
                             <View style = {{left:10}}>
                                 <View style = {{flexDirection:'row',bottom:10}}>
-                                    <Text style = {{textAlign:'center',height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20}}>
+                                    <Text allowFontScaling={false} style = {{textAlign:'center',height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20}}>
                                     {DATEBEGIN!=''?DATEBEGIN+'/'+MONTHBEGIN+'/'+YEARBEGIN:null}</Text>
                                     <TouchableOpacity onPress={()=>{
                                         this.setState({kind:'date',kindOfData:0})
@@ -104,7 +104,7 @@ class SetTimeScreen extends Component {
                                     </TouchableOpacity>
                                 </View>
                                 <View style = {{flexDirection:'row'}}>
-                                    <Text style = {{textAlign:'center',height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20}}>
+                                    <Text allowFontScaling={false} style = {{textAlign:'center',height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20}}>
                                     {   
                                         HOURTIME!=''?parseInt(HOURTIME)<10?('0'+HOURTIME+':'):(HOURTIME+':'):null}{parseInt(MINUTESTIME)<10?'0'+MINUTESTIME:MINUTESTIME}</Text>
                                     <TouchableOpacity onPress={()=>{
@@ -119,12 +119,12 @@ class SetTimeScreen extends Component {
 
 
                         <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                            <Text style = {textTitle2}>Cách ngày:</Text>
-                            <Text style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20 -35}}>
+                            <Text allowFontScaling={false} style = {textTitle2}>Cách ngày:</Text>
+                            <Text allowFontScaling={false} style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20 -35}}>
                             {DELAYDATE!=''?parseInt(DELAYDATE)<10&&(DELAYDATE>=0)?('0'+DELAYDATE):(DELAYDATE):null}</Text>
                             <TouchableOpacity onPress={()=>{
-                                if (parseInt(DELAYDATE) == 0) {
-                                    alert("Lỗi! Giá trị tối thiểu là 0")
+                                if (parseInt(DELAYDATE) == 1) {
+                                    alert("Lỗi! Giá trị tối thiểu là 1")
                                 } else 
                                 this.props.setTimeData(true,'','','','','','','',
                                 '','','','','','','1')                    
@@ -140,8 +140,8 @@ class SetTimeScreen extends Component {
                         </View>
 
                         <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center',marginBottom:10}}>
-                            <Text style = {textTitle2}>Duy trì:</Text>
-                            <Text style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20}}>
+                            <Text allowFontScaling={false} style = {textTitle2}>Duy trì:</Text>
+                            <Text  allowFontScaling={false} style = {{textAlign:'center',left:10,height:35,backgroundColor:'white',fontSize:20,color:'gray',width:width/2-20}}>
                             {HOURDU!=''?parseInt(HOURDU)<10?('0'+HOURDU+':'):(HOURDU+':'):null}{parseInt(MINUTESDU)<10?'0'+MINUTESDU:MINUTESDU}</Text>
                             <TouchableOpacity onPress={()=>{
                                 this.setState({visibleCustomPicker:true})
@@ -153,7 +153,7 @@ class SetTimeScreen extends Component {
                         
 
                         <View style = {{width:width-30,flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center',marginBottom:30}}>
-                            <Text style = {{
+                            <Text allowFontScaling={false} style = {{
                                 backgroundColor:'transparent',
                                 color:'white',
                                 width:100,
@@ -173,31 +173,35 @@ class SetTimeScreen extends Component {
                         </View>
 
                         <TouchableOpacity onPress = {()=>{
+if (MACID!='' && MACID!='nan') {
+    const addr = ADDR=='DQH'?'1':'2'
+    const begin = {
+        DATE:DATEBEGIN,
+        MONTH:MONTHBEGIN,
+        YEAR:YEARBEGIN
+    }
+    const time = {
+        HOUR:HOURTIME,
+        MINUTES:MINUTESTIME
+    }
+    const du = {
+        HOUR:HOURDU,
+        MINUTES:MINUTESDU
+    }
+    const mode = {
+        KIND:'1',
+        DATA:DELAYDATE
+    }
+    const json = 
+    {MACID:MACID,ACC:ACC,ADDR:addr,BEGIN:begin,MODE:mode
+        ,STATE:STATE,TIME:time,DU:du}
+    const jsonString = JSON.stringify(json)
+    this.postForm("http://cretacam.ddns.net/hien123/setRules",
+    {'data':jsonString})
+} else {
+    alert ('Chưa chọn thiết bị')
+}
 
-const addr = ADDR=='DQH'?'1':'2'
-const begin = {
-    DATE:DATEBEGIN,
-    MONTH:MONTHBEGIN,
-    YEAR:YEARBEGIN
-}
-const time = {
-    HOUR:HOURTIME,
-    MINUTES:MINUTESTIME
-}
-const du = {
-    HOUR:HOURDU,
-    MINUTES:MINUTESDU
-}
-const mode = {
-    kind:'1',
-    data:DELAYDATE
-}
-const json = 
-{MACID:MACID,ACC:ACC,ADDR:addr,BEGIN:begin,MODE:mode
-    ,STATE:STATE,TIME:time,DU:du}
-const jsonString = JSON.stringify(json)
-this.postForm("http://cretacam.ddns.net/hien123/setRules",
-{'data':jsonString})
 
 
 // var convertedJson = []

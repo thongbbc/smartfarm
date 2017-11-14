@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import MainScreen from './screen/mainscreen';
 import ListHistoryScreen from './screen/listHistoryScreen'
 import SetTimeScreen from './screen/setTimeScreen'
+import ManageScreen from './screen/manageScreen'
 import {createStore,applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import reducer from './reducer';
@@ -19,7 +20,7 @@ import {
   View
 } from 'react-native';
 import thunk from 'redux-thunk';
-
+var store = createStore(reducer);
 
 class Home extends Component<{}> {
   constructor(props) {
@@ -27,7 +28,7 @@ class Home extends Component<{}> {
   }
   render() {
     return (
-      <Provider store= {createStore(reducer)}>
+      <Provider store= {store}>
         <MainScreen navigation={this.props.navigation}/>
       </Provider>
     );
@@ -57,11 +58,24 @@ class Time extends Component<{}> {
     )
   }
 }
+class ManageDeviceScreen extends Component<{}> {
+  constructor(props) {
+    super(props)
+  }
+  render () {
+    return (
+      <Provider store= {store}>
+        <ManageScreen navigation={this.props.navigation}/>
+      </Provider>
+    )
+  }
+}
 const App = StackNavigator(
   {
     Home: { screen: Home },
     History: { screen: History },
-    SetTime: { screen :Time}
+    SetTime: { screen :Time},
+    ManageDeviceScreen:{screen:ManageDeviceScreen}
   },
   {
     headerMode: 'none',

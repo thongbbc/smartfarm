@@ -11,7 +11,7 @@ function initMQTT () {
         },
     };
     //ws://cretacam.ddns.net:1889/ws
-    client = new Client({uri: 'ws://iot.eclipse.org:80/ws', clientId: 'clientId', storage: myStorage});
+    client = new Client({uri: 'ws://cretacam.ddns.net:1883/ws', clientId: 'clientId'+Math.floor((Math.random() * 1000000) + 1), storage: myStorage});
     return client;
 }
 function analyzeData (data,control) {

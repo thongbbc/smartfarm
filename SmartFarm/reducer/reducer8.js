@@ -13,7 +13,7 @@ const defaultValue = {
     MINUTESDU:'0',
     STATE:'0',
     ADDR:'DQH',
-    DELAYDATE:'0',
+    DELAYDATE:'1',
 }
 export default (state = defaultValue,actions) => {
     switch (actions.type) {
